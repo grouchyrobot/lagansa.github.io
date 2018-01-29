@@ -10,7 +10,7 @@
 
 						.topnav {
 						  overflow: hidden;
-							width:100%;
+						  width:100%;
 						  background-color: #333;
 						}
 
@@ -68,7 +68,7 @@
 								<br>
 						</center>
 
-						<div id='standings_plot'></div>
+						<!-- div id='standings_plot' style='width:1200px;height:800px;'></div-->
 
  						<script>
 								$.getJSON("json/data.json", function(result){
@@ -95,7 +95,23 @@
 												$('#showStanding').append(tr);
 										});
 
-										STANDING = document.getElementById('standings_plot');
+                    var d3 = Plotly.d3;
+                    var WIDTH_IN_PERCENT_OF_PARENT = 80,
+                        HEIGHT_IN_PERCENT_OF_PARENT = 80;
+
+                    var gd3 = d3.select('body')
+                        .append('div')
+                        .style({
+                            width: WIDTH_IN_PERCENT_OF_PARENT + '%',
+                            'margin-left': (100 - WIDTH_IN_PERCENT_OF_PARENT) / 2 + '%',
+
+                            height: HEIGHT_IN_PERCENT_OF_PARENT + 'vh',
+                            'margin-top': (100 - HEIGHT_IN_PERCENT_OF_PARENT) / 4 + 'vh'
+                        });
+
+										//STANDING = document.getElementById('standings_plot');
+
+                    var gd = gd3.node();
 
  										var layout = {
  												title:'La Gansa Standings 2017',
@@ -113,11 +129,15 @@
 											  }
 										};
 
- 										Plotly.newPlot(STANDING, plotData, layout);
+ 										Plotly.newPlot(gd, plotData, layout);
+
+                    window.onresize = function() {
+                        Plotly.Plots.resize(gd);
+                    };
 								});
+
 						</script>
 				</center>
-
 
 		</body>
 </html>
