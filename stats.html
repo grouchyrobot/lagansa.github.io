@@ -33,24 +33,29 @@
 						  color: white;
 						}
 
-						@media only screen and (max-width: 480px) {
+						table {
+								border-collapse: collapse;
+						}
+						th, td {
+								text-align: center;
+								/*padding: 3px;*/
+						}
+						tr:nth-child(even){background-color: #f2f2f2}
+						/*
+						Max width before this PARTICULAR table gets nasty
+						This query will take effect for any screen smaller than 760px
+						and also iPads specifically.
+						*/
+						@media
+						only screen and (max-width: 760px),
+						(min-device-width: 768px) and (max-device-width: 1024px){
 		    				/* horizontal scrollbar for tables if mobile screen */
-		    				.tablemobile {
+		    				.table {
 		        		overflow-x: auto;
 		        		display: block;
 		    				}
 						}
 
-						.table {
-								border-collapse: collapse;
-						}
-
-						.th, .td {
-								text-align: center;
-								/*padding: 3px;*/
-						}
-
-						.tr:nth-child(even){background-color: #f2f2f2}
 				</style>
     </head>
 
