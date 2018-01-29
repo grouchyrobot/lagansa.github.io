@@ -6,7 +6,7 @@
 		    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 				<style>
-						body {margin:0;width:100%;}
+						body {margin:0;}
 
 						.topnav {
 						  overflow: hidden;
@@ -33,14 +33,25 @@
 						  color: white;
 						}
 
-				</style>
+            table {
+                border-collapse: collapse;
+            }
+
+            th, td {
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even){background-color: #f2f2f2}
+        </style>
+
     </head>
 
     <body>
 				<div class="topnav">
 					  <a class="active" href="index.html">Home</a>
 					  <a href="stats.html">Stats</a>
-					  <a href="history.html">History</a>
+					  <a href="history.html">Results</a>
 					  <!-- a href="about.html">About</a-->
 						<img src="https://media.giphy.com/media/yr7n0u3qzO9nG/giphy.gif" alt="La Gansa On Fire" align="right" width="75" height="47">
 				</div>
@@ -50,7 +61,7 @@
 				</center>
 
 				<center>
-						<div id='standings_plot' style='width:1200px;height:800px;'></div>
+						<div id='standings_plot'></div>
 
  						<script>
 								$.getJSON("json/data.json", function(result){
