@@ -33,25 +33,14 @@
 						  color: white;
 						}
 
-            table {
-                border-collapse: collapse;
-            }
-
-            th, td {
-                text-align: left;
-                padding: 8px;
-            }
-
-            tr:nth-child(even){background-color: #f2f2f2}
-        </style>
-
+				</style>
     </head>
 
     <body>
 				<div class="topnav">
 					  <a class="active" href="index.html">Home</a>
 					  <a href="stats.html">Stats</a>
-					  <a href="history.html">Results</a>
+					  <a href="history.html">History</a>
 					  <!-- a href="about.html">About</a-->
 						<img src="https://media.giphy.com/media/yr7n0u3qzO9nG/giphy.gif" alt="La Gansa On Fire" align="right" width="75" height="47">
 				</div>
@@ -61,9 +50,10 @@
 				</center>
 
 				<center>
-						<div id='standings_plot'></div>
+						<!-- div id='standings_plot' style='width:100%; height:800px;'></div-->
 
  						<script>
+
 								$.getJSON("json/data.json", function(result){
 
 										// First row is weeks
@@ -78,18 +68,25 @@
 												}
 												// After the first run we star getting teams
 												skipWeekRow = true;;
-                        /*
-                        // Populate the table
-												var tr = $('<tr>');
-												tr.append("<td>"+i+"</td>");
-												for (var index = 0; index < field.length; index++) {
-														tr.append("<td>" + field[index] + "</td>");
-												}
-												tr.append("</tr>");
-												$('#showStanding').append(tr);*/
 										});
 
-										STANDING = document.getElementById('standings_plot');
+                    var d3 = Plotly.d3;
+                    var WIDTH_IN_PERCENT_OF_PARENT = 80,
+                        HEIGHT_IN_PERCENT_OF_PARENT = 80;
+
+                    var gd3 = d3.select('body')
+                        .append('div')
+                        .style({
+                            width: WIDTH_IN_PERCENT_OF_PARENT + '%',
+                            'margin-left': (100 - WIDTH_IN_PERCENT_OF_PARENT) / 2 + '%',
+
+                            height: HEIGHT_IN_PERCENT_OF_PARENT + 'vh',
+                            'margin-top': (100 - HEIGHT_IN_PERCENT_OF_PARENT) / 4 + 'vh'
+                        });
+
+										//STANDING = document.getElementById('standings_plot');
+
+                    var gd = gd3.node();
 
  										var layout = {
  												title:'La Gansa Standings 2017',
@@ -107,17 +104,14 @@
 											  }
 										};
 
- 										Plotly.newPlot(STANDING, plotData, layout);
-								});
-						</script>
-				</center>
+ 										Plotly.newPlot(gd, plotData, layout);
 
-				<center>
-						<br>
-						<br>
-						<table id="showStanding" border="1" style="font-size:12px"></table>
-						<br>
-						<br>
+                    window.onresize = function() {
+                        Plotly.Plots.resize(gd);
+                    };
+								});
+
+						</script>
 				</center>
 
 		</body>
