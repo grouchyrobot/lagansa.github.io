@@ -33,7 +33,18 @@
 						  color: white;
 						}
 
-				</style>
+            table {
+                border-collapse: collapse;
+            }
+
+            th, td {
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even){background-color: #f2f2f2}
+        </style>
+
     </head>
 
     <body>
@@ -45,73 +56,73 @@
 						<img src="https://media.giphy.com/media/yr7n0u3qzO9nG/giphy.gif" alt="La Gansa On Fire" align="right" width="75" height="47">
 				</div>
 
-      	<center>
-				    <h2>La Gansa</h2>
+      				<center>
+				    <h2>La Gansa: Active Pools</h2>
 				</center>
 
 				<center>
-						<!-- div id='standings_plot' style='width:100%; height:800px;'></div-->
-
  						<script>
-
-								$.getJSON("json/data.json", function(result){
+								$.getJSON("json/polls.json", function(result){
 
 										// First row is weeks
-										var skipWeekRow = false;
-										// Plotly array of variables
-										var plotData = [];
+										var header = true;
 
 										$.each(result, function(i, field){
-												// Collect the names of the teams
-												if(skipWeekRow){
-														plotData.push({	x: result["weeks"],	y: field,	type: 'scatter', name: i,	});
-												}
-												// After the first run we star getting teams
-												skipWeekRow = true;;
+
+							                        // Populate the table
+							                        var tr = $('<tr>');
+
+							                        if(header){
+								                          // Get the header
+								                          tr.append("<th>"+i+"</th>");
+								                          for (var index = 0; index < field.length; index++) {
+								                              tr.append("<th>" + field[index] + "</th>");
+								                          }
+							                        } else{
+								                          // Populate the table
+  												tr.append("<td>"+i+"</td>");
+  												for (var index = 0; index < field.length; index++) {
+
+														if(index == field.length -1)
+														{
+															// Special case for URL
+															tr.append("<td><a href='" + field[index] + "'>" + field[index] + "</a></td>");
+														}
+														else{
+  															tr.append("<td>" + field[index] + "</td>");
+														}
+  												}
+                        }
+                        tr.append("</tr>");
+
+                        header = false;
+
+												$('#active_polls').append(tr);
 										});
-
-                    var d3 = Plotly.d3;
-                    var WIDTH_IN_PERCENT_OF_PARENT = 80,
-                        HEIGHT_IN_PERCENT_OF_PARENT = 60;
-
-
-                    var gd3 = d3.select('body')
-                        .append('div')
-                        .style({
-                            width: WIDTH_IN_PERCENT_OF_PARENT + '%',
-                            'margin-left': (100 - WIDTH_IN_PERCENT_OF_PARENT) / 2 + '%',
-                            height: HEIGHT_IN_PERCENT_OF_PARENT + '%',
-//                            'margin-top': (100 - HEIGHT_IN_PERCENT_OF_PARENT) / 4 + '%'
-                        });
 
 										//STANDING = document.getElementById('standings_plot');
 
-                    var gd = gd3.node();
-
- 										var layout = {
+ 										/*var layout = {
  												title:'La Gansa Standings 2017',
 												xaxis: {
 											    title: 'Weeks',
-													/* For future:
-													titlefont: {
-											      family: 'Courier New, monospace',
-											      size: 18,
-											      color: '#7f7f7f'
-											    }*/
 											  },
 											  yaxis: {
 											    title: 'JPoints',
 											  }
 										};
 
- 										Plotly.newPlot(gd, plotData, layout);
-
-                    window.onresize = function() {
-                        Plotly.Plots.resize(gd);
-                    };
+ 										Plotly.newPlot(STANDING, plotData, layout);*/
 								});
-
 						</script>
+				</center>
+
+				<center>
+						<br>
+						<br>
+						<table id="active_polls" border="1" style="font-size:12px"></table>
+						<br>
+						<br>
 				</center>
 
 		</body>
