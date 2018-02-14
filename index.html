@@ -62,65 +62,101 @@
 
 				<center>
  						<script>
-								$.getJSON("json/polls.json", function(result){
+							$.getJSON("json/polls.json", function(result){
+								// First row is weeks
+								var header = true;
 
-										// First row is weeks
-										var header = true;
+								$.each(result, function(i, field){
 
-										$.each(result, function(i, field){
+									// Populate the table
+						                        var tr = $('<tr>');
 
-							                        // Populate the table
-							                        var tr = $('<tr>');
+					                        	if(header){
+						                          	// Get the header
+						                          	tr.append("<th>"+i+"</th>");
+						                          	for (var index = 0; index < field.length; index++) {
+						                		        tr.append("<th>" + field[index] + "</th>");
+								                }
+						                        } else{
+						                          // Populate the table
+  										tr.append("<td>"+i+"</td>");
+  										for (var index = 0; index < field.length; index++) {
 
-							                        if(header){
-								                          // Get the header
-								                          tr.append("<th>"+i+"</th>");
-								                          for (var index = 0; index < field.length; index++) {
-								                              tr.append("<th>" + field[index] + "</th>");
-								                          }
-							                        } else{
-								                          // Populate the table
-  												tr.append("<td>"+i+"</td>");
-  												for (var index = 0; index < field.length; index++) {
+											if(index == field.length -1)
+											{
+												// Special case for URL
+												tr.append("<td><a href='" + field[index] + "'>" + field[index] + "</a></td>");
+											}
+											else{
+  												tr.append("<td>" + field[index] + "</td>");
+											}
+  										}
+                	       						}
+						                        tr.append("</tr>");
+									header = false;
 
-														if(index == field.length -1)
-														{
-															// Special case for URL
-															tr.append("<td><a href='" + field[index] + "'>" + field[index] + "</a></td>");
-														}
-														else{
-  															tr.append("<td>" + field[index] + "</td>");
-														}
-  												}
-                        }
-                        tr.append("</tr>");
-
-                        header = false;
-
-												$('#active_polls').append(tr);
-										});
-
-										//STANDING = document.getElementById('standings_plot');
-
- 										/*var layout = {
- 												title:'La Gansa Standings 2017',
-												xaxis: {
-											    title: 'Weeks',
-											  },
-											  yaxis: {
-											    title: 'JPoints',
-											  }
-										};
-
- 										Plotly.newPlot(STANDING, plotData, layout);*/
+									$('#active_polls').append(tr);
 								});
+							});
 						</script>
+
+
+ 						<script>
+							$.getJSON("json/polls-results.json", function(result){
+								// First row is weeks
+								var header = true;
+
+								$.each(result, function(i, field){
+
+									// Populate the table
+						                        var tr = $('<tr>');
+
+					                        	if(header){
+						                          	// Get the header
+						                          	tr.append("<th>"+i+"</th>");
+						                          	for (var index = 0; index < field.length; index++) {
+						                		        tr.append("<th>" + field[index] + "</th>");
+								                }
+						                        } else{
+						                          // Populate the table
+  										tr.append("<td>"+i+"</td>");
+  										for (var index = 0; index < field.length; index++) {
+
+											if(index == field.length -1)
+											{
+												// Special case for URL
+												tr.append("<td><a href='" + field[index] + "'>" + field[index] + "</a></td>");
+											}
+											else{
+  												tr.append("<td>" + field[index] + "</td>");
+											}
+  										}
+                	       						}
+						                        tr.append("</tr>");
+									header = false;
+
+									$('#old_polls').append(tr);
+								});
+							});
+						</script>
+	
 				</center>
 
 				<center>
 						<br>
 						<br>
 						<table id="active_polls" border="1" style="font-size:12px"></table>
+						<br>
+						<br>
+
+      				<center>
+				    <h2>Closed Polls</h2>
+				</center>
+
+
+						<br>
+						<br>
+						<table id="old_polls" border="1" style="font-size:12px"></table>
 						<br>
 						<br>
 				</center>
