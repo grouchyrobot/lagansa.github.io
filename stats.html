@@ -47,14 +47,14 @@
 
     <body>
 
- 		<div class="topnav">
+	<div id="navigation"></div>
+ 		<!-- div class="topnav">
 	        	<a class="active" href="stats.html">Gansa 2017</a>
 			<a href="polls.html">Polls</a>
 			<a href="stats2018.html">Gansa 2018</a>
 			<a href="history.html">History</a>
-			<!-- a href="about.html">About</a-->
 			<img src="https://media.giphy.com/media/yr7n0u3qzO9nG/giphy.gif" alt="La Gansa On Fire" align="right" width="75" height="47">
-		</div>
+		</div-->
 
       	<center>
 				    <h2>La Gansa 2017</h2>
@@ -76,6 +76,10 @@
 						<!-- div id='standings_plot' style='width:1200px;height:800px;'></div-->
 
  						<script>
+
+							$(function() {
+								$("#navigation").load("topnav.html");
+							});
 								$.getJSON("json/data.json", function(result){
 
 										// First row is weeks
@@ -140,6 +144,7 @@
                     window.onresize = function() {
                         Plotly.Plots.resize(gd);
                     };
+
 								});
 
 						</script>
