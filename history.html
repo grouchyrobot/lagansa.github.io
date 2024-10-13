@@ -59,67 +59,45 @@
 	</div>
 
       	<center>
-				    <h2>La Gansa through the years:</h2>
-				</center>
+		<h2>La Gansa through the years:</h2>
+	</center>
+	<center>
+ 		<script>
+			$.getJSON("json/history.json", function(result){
+				// First row is weeks
+				var header = true;
+				// Plotly array of variables
+				//var plotData = [];
+				$.each(result, function(i, field){
 
-				<center>
- 						<script>
-								$.getJSON("json/history.json", function(result){
+					// Populate the table
+					var tr = $('<tr>');
 
-										// First row is weeks
-										var header = false;
-										// Plotly array of variables
-										//var plotData = [];
-
-										$.each(result, function(i, field){
-
-                        // Populate the table
-                        var tr = $('<tr>');
-
-                        if(header){
-                          // Get the header
-                          tr.append("<th>"+i+"</th>");
-                          for (var index = 0; index < field.length; index++) {
-                              tr.append("<th>" + field[index] + "</th>");
-                          }
-                        } else{
-                          // Populate the table
-  												tr.append("<td>"+i+"</td>");
-  												for (var index = 0; index < field.length; index++) {
-  														tr.append("<td>" + field[index] + "</td>");
-  												}
-                        }
-                        tr.append("</tr>");
-
-                        header = true;
-
-												$('#leaderboardTable').append(tr);
-										});
-
-										//STANDING = document.getElementById('standings_plot');
-
- 										/*var layout = {
- 												title:'La Gansa Standings 2017',
-												xaxis: {
-											    title: 'Weeks',
-											  },
-											  yaxis: {
-											    title: 'JPoints',
-											  }
-										};
-
- 										Plotly.newPlot(STANDING, plotData, layout);*/
-								});
-						</script>
-				</center>
-
-				<center>
-						<br>
-						<br>
-						<table id="leaderboardTable" border="1" style="font-size:12px"></table>
-						<br>
-						<br>
-				</center>
-
-		</body>
+					if(header){
+					  // Get the header
+					  tr.append("<th>"+i+"</th>");
+					  for (var index = 0; index < field.length; index++) {
+					      tr.append("<th>" + field[index] + "</th>");
+					  }
+					} else{
+		 	                       // Populate the table
+	  					tr.append("<td><b>"+i+"</b></td>");
+	  					for (var index = 0; index < field.length; index++) {
+	  						tr.append("<td>" + field[index] + "</td>");
+	  					}
+				        }
+				        tr.append("</tr>");
+				        header = false	;
+					$('#leaderboardTable').append(tr);
+				});
+			});
+		</script>
+	</center>
+	<center>
+		<br>
+		<table id="leaderboardTable" border="1" style="font-size:12px"></table>
+		<br>
+		<br>
+	</center>
+	</body>
 </html>
